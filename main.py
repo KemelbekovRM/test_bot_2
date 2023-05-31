@@ -6,10 +6,10 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
-bot = Bot (token='5969349861:AAFYdb1VjC5wnP7TBYKEhGkvL-4Q37ZN8WQ')
+bot = Bot(token='5969349861:AAFYdb1VjC5wnP7TBYKEhGkvL-4Q37ZN8WQ')
 dp = Dispatcher(bot)
 
-@dp.message_handlers()
+@dp.message_handler()
 async def echo(message: types.Message):
     await message.answer(message.text)
 
