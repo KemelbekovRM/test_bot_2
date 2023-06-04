@@ -24,6 +24,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 class MyState(StatesGroup):
     wait_answer = State()
     hello_answer = State()
+    echo_answer = State()
 
 
 
@@ -45,6 +46,13 @@ async def answer_message(message: types.Message, state: FSMContext):            
         data_state = await state.get_data()     #переменная получает сосотяние
         print(data_state)
         await message.answer(f'Ну ладно, тебя зовут {data_state["otvet"]}')   #перед сообщением всегда пишется await
+        await MyState.echo_answer.set()
+
+@dp.message_handler(state=MyState.echo_answer)
+async def answer_message(message: types.Message, state: FSMContext):
+    data_state = await state.get_data()  # переменная получает сосотяние
+    print(data_state)
+    await message.answer(f'Хватит писать, я больше ничего не умею!')
 
 
 
