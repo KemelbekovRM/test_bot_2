@@ -17,8 +17,18 @@ from config import TOKEN
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
+#функция старт
+@dp.message_handler(commands=['Start'])
+async def commanda_start(message: types.Message):
+    await message.reply("Салям уалейкум, как тебя зовут джафар?")
+
 @dp.message_handler()
-async def echo(message: types.Message):
-    await message.answer(message.text)
+async def echo_message(message: types.Message):
+    await message.answer('Ты петушара?')
+
+
+# @dp.message_handler()
+# async def echo(message: types.Message):
+#     await message.answer(message.text)
 
 executor.start_polling(dp, skip_updates=True)
