@@ -16,7 +16,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from config import TOKEN
-from keyboard import button_privet
+import keyboard as kb
 
 bot = Bot(token=TOKEN)
 storage = MemoryStorage()
@@ -32,7 +32,7 @@ class MyState(StatesGroup):
 #функция старт
 @dp.message_handler(commands=['Start'])
 async def commanda_start(message: types.Message,  state: FSMContext):
-    await message.reply("Салям уалейкум,\n как тебя зовут?", reply_markup=kb.greet_kb)
+    await message.reply("Салям уалейкум,\n как тебя зовут?", reply_markup=kb.greet_kb1)
     await MyState.hello_answer.set()
 
 @dp.message_handler(state=MyState.hello_answer)    #функция улавливает сообщения

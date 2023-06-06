@@ -7,3 +7,5 @@ button_privet = KeyboardButton('Салям уалейкум,\n как тебя �
 
 greet_kb = ReplyKeyboardMarkup()
 greet_kb.add(button_privet)
+
+greet_kb1 = ReplyKeyboardMarkup(resize_keyboard=True).add(button_privet)
