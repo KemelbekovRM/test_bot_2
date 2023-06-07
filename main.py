@@ -8,7 +8,7 @@
 
 
 #import aiogram
-from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher import FSMContext  #машина состояний
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
@@ -32,21 +32,26 @@ class MyState(StatesGroup):
 #функция старт
 @dp.message_handler(commands=['Start'])
 async def commanda_start(message: types.Message,  state: FSMContext):
-    await message.reply("Салям уалейкум,\n как тебя зовут?", reply_markup=kb.greet_kb1)
+    await message.answer("Салям уалейкум,\n как тебя зовут?", reply_markup=kb.greet_kb)
     await MyState.hello_answer.set()
+
+@dp.message_handler(commands=['hi'])
+async def commanda_hi(message: types.Message):
+    await message.reply("Меняем размер клавиатуры", reply_markup=kb.greet_kb1)
+
 
 @dp.message_handler(state=MyState.hello_answer)    #функция улавливает сообщения
 async def echo_message(message: types.Message, state: FSMContext):             # функция принимает сообщение которое уловила
         print(message.text)
         await state.update_data(otvet=message.text)
-        await message.answer('Ты разве не Джафар?')   #перед сообщением всегда пишется await
+        await message.reply('Ты разве не Джафар?')   #перед сообщением всегда пишется await
         await MyState.wait_answer.set()
 
 @dp.message_handler(state=MyState.wait_answer)    # попадает если установлен статус
 async def answer_message(message: types.Message, state: FSMContext):             # функция принимает сообщение которое уловила
         data_state = await state.get_data()     #переменная получает сосотяние
         print(data_state)
-        await message.answer(f'Ну ладно, тебя зовут {data_state["otvet"]}')   #перед сообщением всегда пишется await
+        await message.reply(f'Ну ладно, тебя зовут {data_state["otvet"]}')   #перед сообщением всегда пишется await
         await MyState.echo_answer.set()
 
 @dp.message_handler(state=MyState.echo_answer)
